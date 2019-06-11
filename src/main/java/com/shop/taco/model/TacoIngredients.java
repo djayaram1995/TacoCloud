@@ -1,5 +1,7 @@
 package com.shop.taco.model;
 
+import org.springframework.stereotype.Repository;
+
 public class TacoIngredients {
 	private String id;
 	private String name;
@@ -38,4 +40,10 @@ public class TacoIngredients {
 	public void setType(Type type) {
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "TacoIngredients [id=" + id + ", name=" + name + ", type=" + type + "]";
+	}
+	
 }
