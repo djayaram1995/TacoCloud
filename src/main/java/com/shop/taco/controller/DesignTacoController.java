@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.shop.taco.model.Taco;
 import com.shop.taco.model.TacoIngredients;
 import com.shop.taco.model.TacoIngredients.Type;
-import com.shop.taco.repository.SaveTacoTemplate;
+import com.shop.taco.repository.IngredientRepository;
 
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
 	
 	@Autowired
-	private SaveTacoTemplate sv;
+	private IngredientRepository sv;
 
 	@GetMapping
 	public String showDesignForm(Model model) {
@@ -50,7 +50,10 @@ public class DesignTacoController {
 	@PostMapping
 	public String processDesign(@Valid Taco design, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			sv.findOne("1");
+			//TacoIngredients tc = sv.findOne("1");
+			List<TacoIngredients> tcall = (List<TacoIngredients>) sv.findAll();
+			//System.out.println("tc"+tc);
+			System.out.println("tcall"+ tcall);
 			model.addAttribute("error", errors.getAllErrors().get(0).getDefaultMessage());
 			List<TacoIngredients> tacoIngredients = Arrays.asList(
 					new TacoIngredients("FLTO", "Flour Tortilla", Type.WRAP),
