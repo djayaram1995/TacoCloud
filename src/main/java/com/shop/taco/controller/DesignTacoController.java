@@ -29,16 +29,8 @@ public class DesignTacoController {
 	@GetMapping
 	public String showDesignForm(Model model) {
 
-		List<TacoIngredients> tacoIngredients = Arrays.asList(new TacoIngredients("FLTO", "Flour Tortilla", Type.WRAP),
-				new TacoIngredients("COTO", "Corn Tortilla", Type.WRAP),
-				new TacoIngredients("GRBF", "Ground Beef", Type.PROTEIN),
-				new TacoIngredients("CARN", "Carnitas", Type.PROTEIN),
-				new TacoIngredients("TMTO", "Diced Tomatoes", Type.VEGGIES),
-				new TacoIngredients("LETC", "Lettuce", Type.VEGGIES),
-				new TacoIngredients("CHED", "Cheddar", Type.CHEESE),
-				new TacoIngredients("JACK", "Monterrey Jack", Type.CHEESE),
-				new TacoIngredients("SLSA", "Salsa", Type.SAUCE),
-				new TacoIngredients("SRCR", "Sour Cream", Type.SAUCE));
+		List<TacoIngredients> tacoIngredients = (List<TacoIngredients>) sv.findAll();
+		System.out.println("tacoIngredients"+ tacoIngredients);
 		Type[] types = TacoIngredients.Type.values();
 		for (Type type : types) {
 			model.addAttribute(type.toString().toLowerCase(), filterByType(tacoIngredients, type));
@@ -50,22 +42,10 @@ public class DesignTacoController {
 	@PostMapping
 	public String processDesign(@Valid Taco design, Errors errors, Model model) {
 		if (errors.hasErrors()) {
-			//TacoIngredients tc = sv.findOne("1");
-			List<TacoIngredients> tcall = (List<TacoIngredients>) sv.findAll();
-			//System.out.println("tc"+tc);
-			System.out.println("tcall"+ tcall);
+			List<TacoIngredients> tacoIngredients = (List<TacoIngredients>) sv.findAll();
+			System.out.println("tcall"+ tacoIngredients);
 			model.addAttribute("error", errors.getAllErrors().get(0).getDefaultMessage());
-			List<TacoIngredients> tacoIngredients = Arrays.asList(
-					new TacoIngredients("FLTO", "Flour Tortilla", Type.WRAP),
-					new TacoIngredients("COTO", "Corn Tortilla", Type.WRAP),
-					new TacoIngredients("GRBF", "Ground Beef", Type.PROTEIN),
-					new TacoIngredients("CARN", "Carnitas", Type.PROTEIN),
-					new TacoIngredients("TMTO", "Diced Tomatoes", Type.VEGGIES),
-					new TacoIngredients("LETC", "Lettuce", Type.VEGGIES),
-					new TacoIngredients("CHED", "Cheddar", Type.CHEESE),
-					new TacoIngredients("JACK", "Monterrey Jack", Type.CHEESE),
-					new TacoIngredients("SLSA", "Salsa", Type.SAUCE),
-					new TacoIngredients("SRCR", "Sour Cream", Type.SAUCE));
+			
 			Type[] types = TacoIngredients.Type.values();
 			for (Type type : types) {
 				model.addAttribute(type.toString().toLowerCase(), filterByType(tacoIngredients, type));

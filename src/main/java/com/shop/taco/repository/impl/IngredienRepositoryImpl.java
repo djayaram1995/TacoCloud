@@ -22,8 +22,7 @@ public class IngredienRepositoryImpl implements IngredientRepository {
 
 	@Override
 	public List<TacoIngredients> findAll() {
-		return (List<TacoIngredients>) jdbc.query("select id, name, type from Ingredient",
-				this::mapRowtoIngredient);
+		return (List<TacoIngredients>) jdbc.query("select id, name, type from Ingredient", this::mapRowtoIngredient);
 	}
 
 	@Override
@@ -85,10 +84,12 @@ public class IngredienRepositoryImpl implements IngredientRepository {
 		return new TacoIngredients(rs.getString("id"), rs.getString("name"),
 				TacoIngredients.Type.valueOf(rs.getString("type")));
 	}
+
 	@Override
 	public TacoIngredients save(TacoIngredients ingredient) {
-		// TODO Auto-generated method stub
-		return null;
+		jdbc.update("insert into Ingredient (id, name, type) values (?, ?, ?)", ingredient.getId(),
+				ingredient.getName(), ingredient.getType().toString());
+		return ingredient;
 	}
 
 }
